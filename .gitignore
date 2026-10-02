@@ -2,8 +2,27 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .mypy_cache/
+.ruff_cache/
 .venv/
 venv/
-outputs/
+env/
+ENV/
 *.egg-info/
 .DS_Store
+Thumbs.db
+*.log
+
+# Streamlit secrets and local run products
+.streamlit/secrets.toml
+outputs/
+uploads/
+tmp/
+.streamlit/cache/
+
+# Experimental files dropped into the working tree.
+# The labeled synthetic campaign in data/demo/ stays tracked.
+data/xrd/*
+!data/xrd/.gitkeep
+data/synthesis_params.csv
+data/synthesis_params.xlsx
+data/synthesis_params.xls

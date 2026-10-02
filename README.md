@@ -10,9 +10,12 @@ The repository does not ship experimental patterns. `data/xrd/` is where those f
 
 ```bash
 pip install -r requirements.txt
+streamlit run app.py
 ```
 
-Python 3.10 or newer.
+Python 3.12. `app.py` is the Streamlit entry point. `python main.py` remains the batch command.
+
+Open the app, upload XRD files (or tick the bundled synthetic demo), edit stirrer size, stirring speed, flask volume, and the other etch conditions in the table, then run the analysis. Results are on five tabs: summary, spectra, impurity and crystallinity, parameter ranking, and downloads.
 
 ## Inspect files first
 
@@ -122,6 +125,54 @@ python -m pytest
 * `loader.py` — read and align spectra and synthesis tables
 * `xrd_analyzer.py` — baseline, peak fits, c axis, impurity indices, spectrum plots
 * `correlation_analyzer.py` — correlations, forest importance, ridge model, ranking plots
-* `main.py` — end-to-end run
+* `app.py` — Streamlit app (`streamlit run app.py`)
+* `main.py` — command-line end-to-end run
 * `inspect_data.py` — format and column report
 * `demo_data.py` — synthetic campaign
+
+## Streamlit Community Cloud
+
+The Cloud app should use Python 3.12 and main file `app.py`. `requirements.txt` is pinned. `packages.txt` installs a Japanese font for the matplotlib labels. `.streamlit/config.toml` sets the upload limit to 200 MB. Put secrets only in `.streamlit/secrets.toml`, which is gitignored.
+
+1. Push this repository to GitHub.
+2. Open [share.streamlit.io](https://share.streamlit.io), choose **Create app**, and pick this repo.
+3. Set the main file to `app.py` and the Python version to 3.12.
+4. Deploy. The first build installs the pinned requirements.
+
+Files placed in `data/xrd/` or `data/synthesis_params.csv` on a local machine are gitignored so experimental patterns are not committed. `data/demo/` is the synthetic set the app can load without an upload, and it stays in the repository.
+
+## GitHub
+
+This project is already a git repository. The branch that contains the app is the one Streamlit Cloud should build, with main file `app.py`.
+
+On a machine that does not have the repo yet:
+
+```bash
+git clone git@github.com:YOUR_USER/MXene_Rietveld_Analysis_test.git
+cd MXene_Rietveld_Analysis_test
+git checkout -b streamlit-app
+# edit, then
+git add .
+git commit -m "Add Streamlit app for MXene XRD analysis"
+git push -u origin streamlit-app
+```
+
+To create a brand-new empty GitHub repository and push this folder to it:
+
+```bash
+cd /path/to/MXene_Rietveld_Analysis_test
+git init
+git add .
+git status
+git commit -m "Add MXene XRD analysis pipeline and Streamlit app"
+gh repo create MXene_Rietveld_Analysis_test --private --source=. --remote=origin --push
+```
+
+If `origin` already points somewhere else, add the new remote under another name:
+
+```bash
+git remote add github git@github.com:YOUR_USER/MXene_Rietveld_Analysis_test.git
+git push -u github HEAD
+```
+
+In Streamlit Cloud, choose that repository, the branch you pushed, and main file `app.py`.

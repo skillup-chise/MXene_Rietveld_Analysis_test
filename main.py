@@ -99,6 +99,7 @@ def run_pipeline(
     return {
         "features": features,
         "peaks": peaks,
+        "results": results,
         "inspection": bundle.inspection,
         "plot_paths": plot_paths,
         "correlation": correlation_result,
