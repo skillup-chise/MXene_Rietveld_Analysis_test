@@ -1,0 +1,9 @@
+# Pinned for a Python 3.12 Streamlit Community Cloud build.
+streamlit==1.65.0
+numpy==2.4.4
+pandas==3.0.6
+scipy==1.18.1
+scikit-learn==1.9.1
+matplotlib==3.11.2
+openpyxl==3.1.5
+pytest==9.1.1
