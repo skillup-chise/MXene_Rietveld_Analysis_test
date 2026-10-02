@@ -396,8 +396,8 @@ def _build_spectrum(
     metadata: dict,
 ) -> XRDSpectrum:
     angle, counts = clean_xy(two_theta, intensity)
-    if angle.size < 5:
-        raise ValueError(f"Sample {sample_id} in {path.name} has fewer than 5 finite points")
+    if angle.size < 2:
+        raise ValueError(f"Sample {sample_id} in {path.name} has fewer than 2 finite points")
     return XRDSpectrum(
         sample_id=str(sample_id).strip(),
         two_theta=angle,

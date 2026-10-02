@@ -904,8 +904,9 @@ def summarize_features(features: pd.DataFrame) -> list[str]:
     if features.empty:
         return ["No XRD features were extracted."]
     lines = [f"Samples analyzed: {len(features)}"]
-    flags = features["assignment_flag"].value_counts(dropna=False)
-    lines.append("Basal-peak assignments: " + ", ".join(f"{name}={count}" for name, count in flags.items()))
+    if "assignment_flag" in features.columns:
+        flags = features["assignment_flag"].value_counts(dropna=False)
+        lines.append("Basal-peak assignments: " + ", ".join(f"{name}={count}" for name, count in flags.items()))
     for column, label, digits in (
         ("c_axis_A", "c axis (Å)", 3),
         ("d_002_A", "d(002) (Å)", 3),
@@ -914,6 +915,8 @@ def summarize_features(features: pd.DataFrame) -> list[str]:
         ("max_impurity_index", "MAX intensity index", 3),
         ("tio2_impurity_index", "TiO2 intensity index", 3),
     ):
+        if column not in features.columns:
+            continue
         values = pd.to_numeric(features[column], errors="coerce")
         finite = values[np.isfinite(values)]
         if finite.empty:
