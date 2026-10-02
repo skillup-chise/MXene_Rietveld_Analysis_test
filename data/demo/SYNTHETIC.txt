@@ -1,0 +1,8 @@
+SYNTHETIC DATA
+These XRD patterns and synthesis parameters were simulated by demo_data.py.
+They are not experimental MXene measurements.
+samples: 36
+seed: 42
+wavelength_A: 1.5406
+two_theta_step_deg: 0.02
+generator_truth.csv is the simulation answer key. The analysis pipeline does not read it.
